@@ -18,6 +18,7 @@ app.get('/api/extract', async (req, res) => {
         const url = `https://aniwatchtv.to/ajax/v2/episode/sources?id=${id}`;
         const axiosResponse = await axiosInstance.get(url);
         const browser = await puppeteer.launch({
+            executablePath: "./chrome.exe",
             headless: "new",
             args: [
                 '--no-sandbox',
