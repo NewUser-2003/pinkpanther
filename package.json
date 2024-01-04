@@ -5,6 +5,7 @@
     "chrome-paths": "^1.0.1",
     "crypto-js": "^4.2.0",
     "deobfuscator": "^2.4.5",
+    "dotenv": "^16.3.1",
     "electron-log": "^5.0.3",
     "express": "^4.18.2",
     "jquery": "^3.7.1",
@@ -15,7 +16,7 @@
     "webcrack": "^2.11.1"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "type": "module",
   "devDependencies": {
