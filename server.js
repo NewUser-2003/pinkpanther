@@ -12,7 +12,6 @@ puppeteer.use(stealth);
 app.get('/api/extract', async (req, res) => {
     try {
         const id = req.query.id;
-
         if (!id) {
             return res.status(400).json({ error: 'Missing id parameter' });
         }
