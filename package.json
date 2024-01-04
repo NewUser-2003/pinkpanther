@@ -15,7 +15,7 @@
     "webcrack": "^2.11.1"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "type": "module",
   "devDependencies": {
