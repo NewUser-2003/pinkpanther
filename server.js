@@ -2,6 +2,8 @@ import puppeteer from "puppeteer-extra";
 import stealthPlugin from "puppeteer-extra-plugin-stealth";
 import { axiosInstance } from "./axios.js";
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {
@@ -12,13 +14,15 @@ puppeteer.use(stealth);
 app.get('/api/extract', async (req, res) => {
     try {
         const id = req.query.id;
+
         if (!id) {
             return res.status(400).json({ error: 'Missing id parameter' });
         }
         const url = `https://aniwatchtv.to/ajax/v2/episode/sources?id=${id}`;
         const axiosResponse = await axiosInstance.get(url);
         const browser = await puppeteer.launch({
-            executablePath: "chrome.exe",
+            executablePath: 
+            process.env.NODE_ENV === "production" ? process.env.PUPPETEERR_EXECUTABLE_PATH :  puppeteer.executablePath(),      
             headless: "new",
             args: [
                 '--no-sandbox',
@@ -79,3 +83,4 @@ app.get('/api/extract', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
 });
+
