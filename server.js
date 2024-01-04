@@ -2,8 +2,8 @@ import puppeteer from "puppeteer-extra";
 import stealthPlugin from "puppeteer-extra-plugin-stealth";
 import { axiosInstance } from "./axios.js";
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {
@@ -20,8 +20,7 @@ app.get('/api/extract', async (req, res) => {
         }
         const url = `https://aniwatchtv.to/ajax/v2/episode/sources?id=${id}`;
         const axiosResponse = await axiosInstance.get(url);
-        const browser = await puppeteer.launch({
-            executablePath:process.env.NODE_ENV === "production" ? process.env.PUPPETEERR_EXECUTABLE_PATH :  puppeteer.executablePath(),      
+        const browser = await puppeteer.launch({      
             headless: "new",
             args: [
                 '--no-sandbox',
