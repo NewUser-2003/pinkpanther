@@ -49,19 +49,23 @@ app.get('/api/extract', async (req, res) => {
             ],
         });
         client.on(
-            "Network.requestIntercepted",
-            async ({ interceptionId, request, responseHeaders, resourceType }) => {
-                if (request.url.includes("m3u8")) {
-                    res.json({ url: request.url });
-                    await browser.close();
-                    m3u8LinkFound = true;
-                } else {
-                    client.send("Network.continueInterceptedRequest", {
-                        interceptionId,
-                    });
-                }
+    "Network.requestIntercepted",
+    async ({ interceptionId, request, responseHeaders, resourceType }) => {
+        if (request.url.includes("m3u8")) {
+            res.json({ url: request.url });
+            await browser.close();
+            m3u8LinkFound = true;
+        } else {
+            try {
+                await client.send("Network.continueInterceptedRequest", {
+                    interceptionId: interceptionId,
+                });
+            } catch (err) {
+                console.error("Error continuing intercepted request:", err);
             }
-        );
+        }
+    }
+);
         await page.goto(axiosResponse.data.link, { waitUntil: 'domcontentloaded' });
         if (!m3u8LinkFound) {
             await new Promise(resolve => setTimeout(resolve, 5000));
