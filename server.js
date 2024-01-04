@@ -83,5 +83,5 @@ app.get('/api/extract', async (req, res) => {
     }
 });
 app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
+    console.log(`Server is listening at port:${port}`);
 });
